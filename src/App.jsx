@@ -1,8 +1,10 @@
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { auth } from './firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import NewsBoard from './components/NewsBoard';
+import ChatRoom from './components/ChatRoom';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -18,7 +20,7 @@ function App() {
       }
     });
 
-    return () => unsubscribe();
+    return unsubscribe;
   }, [navigate]);
 
   const handleLogout = () => {
@@ -26,7 +28,9 @@ function App() {
     navigate('/');
   };
 
-  if (!user) return null;
+  if (user === null) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -39,7 +43,10 @@ function App() {
         </button>
       </div>
       <Navbar setCategory={setCategory} />
-      <NewsBoard category={category} />
+      <Routes>
+        <Route path="/" element={<NewsBoard category={category} />} />
+        <Route path="chat/:newsTitle" element={<ChatRoom />} />
+      </Routes>
     </div>
   );
 }

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Newsitem = ({ title, description, src, url }) => {
+  const navigate = useNavigate();
+  const [imgError, setImgError] = useState(false);
+  
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden m-4">
       <img 
-        src={src || 'https://via.placeholder.com/360x200'} 
+        src={!imgError ? src : 'https://placehold.co/360x200/png?text=News'}
         className="w-full h-48 object-cover"
         alt={title}
+        onError={() => setImgError(true)}
       />
       <div className="p-4">
         <h5 className="text-xl font-semibold mb-2 text-gray-800">
@@ -25,14 +30,14 @@ export const Newsitem = ({ title, description, src, url }) => {
         >
           Read More
         </a>
-        <a 
-          /*code to be inserted*/
-          className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-        >
+        <button 
+           onClick={() => navigate(`/dashboard/chat/${encodeURIComponent(title)}`)}
+           className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors ml-2"
+        > 
           Discuss
-        </a>
+        </button>
         <a 
-          /*code to be inserted*/
+          /*code to be inserted for laws fetch*/
           className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
         >
           laws/articles

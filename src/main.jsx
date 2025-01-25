@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<App />} />
+        <Route path="/dashboard/*" element={<App />} />
       </Routes>
     </Router>
   </React.StrictMode>
